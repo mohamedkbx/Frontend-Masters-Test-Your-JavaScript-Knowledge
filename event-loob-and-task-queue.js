@@ -35,20 +35,21 @@
 //todo [Q3]:  Put the logs in the correct order
 
 async function asyncFunction() {
-  console.log(1); //1
-  new Promise(() => console.log(2)); //2
+  console.log(1); //[3]
+  new Promise(() => console.log(2)); //[4]
   await new Promise((res) => {
-    setTimeout(() => console.log(3), 0); // async 1
+    setTimeout(() => console.log(3), 0); //[8]
     res();
   });
 }
+
 new Promise((res) => {
-  console.log(4); //3
+  console.log(4); // [1]
   (async () => {
-    console.log(5); //4
+    console.log(5); //[2]
     await asyncFunction();
-    console.log(6);
+    console.log(6); //[7]
   })();
   res();
-}).then(() => console.log(7)); //async2
-console.log(8); //5
+}).then(() => console.log(7)); //[6]
+console.log(8); //[5]

@@ -34,22 +34,40 @@
 
 //todo [Q3]:  Put the logs in the correct order
 
-async function asyncFunction() {
-  console.log(1); //[3]
-  new Promise(() => console.log(2)); //[4]
-  await new Promise((res) => {
-    setTimeout(() => console.log(3), 0); //[8]
-    res();
-  });
-}
+// async function asyncFunction() {
+//   console.log(1); //[3]
+//   new Promise(() => console.log(2)); //[4]
+//   await new Promise((res) => {
+//     setTimeout(() => console.log(3), 0); //[8]
+//     res();
+//   });
+// }
 
-new Promise((res) => {
-  console.log(4); // [1]
-  (async () => {
-    console.log(5); //[2]
-    await asyncFunction();
-    console.log(6); //[7]
-  })();
-  res();
-}).then(() => console.log(7)); //[6]
-console.log(8); //[5]
+// new Promise((res) => {
+//   console.log(4); // [1]
+//   (async () => {
+//     console.log(5); //[2]
+//     await asyncFunction();
+//     console.log(6); //[7]
+//   })();
+//   res();
+// }).then(() => console.log(7)); //[6]
+// console.log(8); //[5]
+
+// ################################################
+
+//todo [Q4]:  Choose the correct logs
+
+(async () => {
+  const asyncFunc = async () => "asyncFunc";
+  const promise = new Promise((res) => {
+    console.log("promise"); //1
+  }).then(() => console.log("then"));
+  console.log("async body"); //2
+  queueMicrotask(() => {
+    console.log("queueMicrotask"); //4
+  });
+  const results = await Promise.all([asyncFunc(), promise]);
+  return results;
+})();
+console.log("script"); //3

@@ -11,18 +11,18 @@
 function logThis() {
   console.log(this);
 }
-const obj = {
+const obj5 = {
   logThis,
   logThis2() {
     return logThis();
   },
   logThis3() {
-    return obj.logThis();
+    return obj5.logThis();
   },
 };
-obj.logThis();
-obj.logThis2();
-obj.logThis3();
+obj5.logThis();
+obj5.logThis2();
+obj5.logThis3();
 
 //todo[Q2]:What will the this keyword refer to for each invocation
 const objA = {
@@ -61,3 +61,38 @@ const obj2 = { ...obj1, foo2: () => obj1.foo() };
 for (const key in obj2) {
   obj2[key]();
 }
+
+//todo[Q4]:What gets logged?
+function logThis() {
+  console.log(this);
+}
+const obj = {
+  logThis,
+  logThisInArrow: () => console.log(this),
+  logThisNested() {
+    const nestedFunc = () => console.log(this);
+    nestedFunc();
+  },
+};
+obj.logThis(); //obj
+obj.logThisInArrow(); //window
+obj.logThisNested(); //obj
+
+//todo[Q5]:What gets logged?
+
+const obj6 = {
+  logThis() {
+    console.log(this);
+  },
+  logThis2() {
+    function logThisInner() {
+      console.log(this);
+    }
+    return logThisInner.apply(this);
+  },
+};
+const { logThis, logThis2 } = obj6;
+logThis(); //window
+logThis2(); //window
+obj6.logThis(); //obj
+obj6.logThis2(); //obj

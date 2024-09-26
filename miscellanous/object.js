@@ -8,4 +8,12 @@ console.log(obj.name);
 
 // output : TypeError
 
-// مهم اخد بالى من انو بيتنفذ ف موديول
+// module have usestrict implicity =مهم اخد بالى من انو بيتنفذ ف موديول
+
+// ("use strict");
+// const obj = Object.freeze({
+//   name: "John",
+// });
+
+// obj.name = "Jane";
+// console.log(obj.name);
